@@ -21,6 +21,9 @@ import '@strudel/xen/xen.mjs';
 // import '@strudel/webaudio/webaudio.mjs';
 // import '@strudel/serial/serial.mjs';
 import '../website/src/repl/piano';
+//import * as motionHelpers from '../packages/motion/index.mjs';
+//import * as geolocationHelpers from '../packages/geolocation/index.mjs';
+import * as gamepadHelpers from '../packages/gamepad/index.mjs';
 
 class MockedNode {
   chain() {
@@ -74,72 +77,31 @@ const toneHelpersMocked = {
   highpass: mockNode,
 };
 
-strudel.Pattern.prototype.osc = function () {
-  return this;
-};
-strudel.Pattern.prototype.csound = function () {
-  return this;
-};
-strudel.Pattern.prototype.tone = function () {
-  return this;
-};
-strudel.Pattern.prototype.webdirt = function () {
-  return this;
-};
-
-// draw mock
-strudel.Pattern.prototype.pianoroll = function () {
-  return this;
-};
-
-// speak mock
-strudel.Pattern.prototype.speak = function () {
-  return this;
-};
-
-// webaudio mock
-strudel.Pattern.prototype.wave = function () {
-  return this;
-};
-strudel.Pattern.prototype.filter = function () {
-  return this;
-};
-strudel.Pattern.prototype.adsr = function () {
-  return this;
-};
-strudel.Pattern.prototype.webaudio = function () {
-  return this;
-};
-strudel.Pattern.prototype.soundfont = function () {
-  return this;
-};
-// tune mock
-strudel.Pattern.prototype.tune = function () {
-  return this;
-};
-
-strudel.Pattern.prototype.midi = function () {
-  return this;
-};
-
-strudel.Pattern.prototype._scope = function () {
-  return this;
-};
-strudel.Pattern.prototype._spiral = function () {
-  return this;
-};
-strudel.Pattern.prototype._pitchwheel = function () {
-  return this;
-};
-strudel.Pattern.prototype._pianoroll = function () {
-  return this;
-};
-strudel.Pattern.prototype._spectrum = function () {
-  return this;
-};
-strudel.Pattern.prototype.markcss = function () {
-  return this;
-};
+[
+  'osc',
+  'csound',
+  'tone',
+  'webdirt',
+  'pianoroll',
+  'speak',
+  'wave',
+  'filter',
+  'adsr',
+  'webaudio',
+  'soundfont',
+  'tune',
+  'midi',
+  '_scope',
+  '_spiral',
+  '_pitchwheel',
+  '_pianoroll',
+  '_spectrum',
+  'markcss',
+].forEach((mock) => {
+  strudel.Pattern.prototype[mock] = function () {
+    return this;
+  };
+});
 
 const uiHelpersMocked = {
   backgroundImage: id,
@@ -172,6 +134,7 @@ evalScope(
   uiHelpersMocked,
   webaudio,
   tonalHelpers,
+  gamepadHelpers,
   /*
   toneHelpers,
   voicingHelpers,
@@ -193,7 +156,6 @@ evalScope(
     loadcsound,
     setcps: id,
     Clock: {}, // whatever
-    // Tone,
   },
 );
 
